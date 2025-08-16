@@ -1,46 +1,259 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>TRX Earn Bux</title>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRX Earn Bux - Professional Crypto Earning Platform</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="stylesheet" href="style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div id="app">
-    <h1>🚀 TRX Earn Bux</h1>
-    <p id="welcome"></p>
+    <!-- Header Section -->
+    <header class="header">
+      <div class="header-content">
+        <div class="logo-section">
+          <i class="fas fa-coins logo-icon"></i>
+          <h1 class="logo-text">TRX Earn Bux</h1>
+        </div>
+        <div class="user-info">
+          <span id="welcome" class="welcome-text"></span>
+          <div class="balance-display">
+            <i class="fas fa-wallet"></i>
+            <span id="headerBalance">0.000</span> TRX
+          </div>
+        </div>
+      </div>
+    </header>
 
-    <nav>
-      <button onclick="showSection('earn')">Earn</button>
-      <button onclick="showSection('refer')">Refer</button>
-      <button onclick="showSection('wallet')">Wallet</button>
-      <button onclick="showSection('tasks')">Tasks</button>
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="nav-tab active" onclick="showSection('earn')" data-section="earn">
+        <i class="fas fa-play-circle"></i>
+        <span>Earn</span>
+      </button>
+      <button class="nav-tab" onclick="showSection('refer')" data-section="refer">
+        <i class="fas fa-users"></i>
+        <span>Refer</span>
+      </button>
+      <button class="nav-tab" onclick="showSection('wallet')" data-section="wallet">
+        <i class="fas fa-wallet"></i>
+        <span>Wallet</span>
+      </button>
+      <button class="nav-tab" onclick="showSection('tasks')" data-section="tasks">
+        <i class="fas fa-tasks"></i>
+        <span>Tasks</span>
+      </button>
     </nav>
 
-    <section id="earn" class="page">
-      <h2>Earn TRX</h2>
-      <button id="watchAd">🎥 Watch Ad (0.005 TRX)</button>
-      <p id="cooldown"></p>
-    </section>
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Earn Section -->
+      <section id="earn" class="page active">
+        <div class="section-header">
+          <h2><i class="fas fa-play-circle"></i> Earn TRX</h2>
+          <p class="section-description">Watch ads and earn cryptocurrency instantly</p>
+        </div>
+        
+        <div class="earn-card">
+          <div class="earn-info">
+            <div class="reward-amount">
+              <span class="amount">0.005</span>
+              <span class="currency">TRX</span>
+            </div>
+            <p class="reward-label">per ad watched</p>
+          </div>
+          
+          <button id="watchAd" class="earn-button">
+            <i class="fas fa-play"></i>
+            <span>Watch Ad</span>
+          </button>
+          
+          <div id="cooldown" class="cooldown-timer"></div>
+        </div>
 
-    <section id="refer" class="page" style="display:none;">
-      <h2>Refer & Earn</h2>
-      <p>Your link: <span id="refLink"></span></p>
-    </section>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <i class="fas fa-eye"></i>
+            <div class="stat-content">
+              <span class="stat-value" id="adsWatched">0</span>
+              <span class="stat-label">Ads Watched</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <i class="fas fa-coins"></i>
+            <div class="stat-content">
+              <span class="stat-value" id="totalEarned">0.000</span>
+              <span class="stat-label">Total Earned</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <section id="wallet" class="page" style="display:none;">
-      <h2>Wallet</h2>
-      <p>Balance: <span id="balance">0</span> TRX</p>
-      <input id="binanceUid" placeholder="Binance UID">
-      <input id="amount" placeholder="Amount TRX">
-      <button id="withdrawBtn">💸 Withdraw</button>
-    </section>
+      <!-- Refer Section -->
+      <section id="refer" class="page">
+        <div class="section-header">
+          <h2><i class="fas fa-users"></i> Refer & Earn</h2>
+          <p class="section-description">Invite friends and earn bonus TRX</p>
+        </div>
+        
+        <div class="refer-card">
+          <div class="refer-info">
+            <div class="refer-reward">
+              <span class="amount">0.02</span>
+              <span class="currency">TRX</span>
+            </div>
+            <p class="reward-label">per referral</p>
+          </div>
+          
+          <div class="referral-link-container">
+            <label>Your Referral Link:</label>
+            <div class="link-input-group">
+              <input type="text" id="refLink" readonly class="referral-link">
+              <button class="copy-btn" onclick="copyReferralLink()">
+                <i class="fas fa-copy"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div class="referral-stats">
+            <div class="stat-item">
+              <span class="stat-number" id="referralCount">0</span>
+              <span class="stat-text">Referrals</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number" id="referralEarnings">0.000</span>
+              <span class="stat-text">TRX Earned</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <section id="tasks" class="page" style="display:none;">
-      <h2>Tasks</h2>
-      <p>🎯 Complete 100 ads to earn +0.1 TRX</p>
-    </section>
+      <!-- Wallet Section -->
+      <section id="wallet" class="page">
+        <div class="section-header">
+          <h2><i class="fas fa-wallet"></i> Wallet</h2>
+          <p class="section-description">Manage your TRX balance and withdrawals</p>
+        </div>
+        
+        <div class="wallet-overview">
+          <div class="balance-card">
+            <div class="balance-header">
+              <i class="fas fa-coins"></i>
+              <span>Available Balance</span>
+            </div>
+            <div class="balance-amount">
+              <span id="balance">0.000</span>
+              <span class="currency">TRX</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="withdraw-form">
+          <h3>Withdraw Funds</h3>
+          <div class="form-group">
+            <label for="binanceUid">
+              <i class="fas fa-user"></i>
+              Binance UID
+            </label>
+            <input type="text" id="binanceUid" placeholder="Enter your Binance UID" class="form-input">
+          </div>
+          
+          <div class="form-group">
+            <label for="amount">
+              <i class="fas fa-coins"></i>
+              Amount (TRX)
+            </label>
+            <input type="number" id="amount" placeholder="0.5" min="0.5" step="0.001" class="form-input">
+            <small class="form-help">Minimum withdrawal: 0.5 TRX</small>
+          </div>
+          
+          <button id="withdrawBtn" class="withdraw-button">
+            <i class="fas fa-arrow-up"></i>
+            <span>Withdraw</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Tasks Section -->
+      <section id="tasks" class="page">
+        <div class="section-header">
+          <h2><i class="fas fa-tasks"></i> Daily Tasks</h2>
+          <p class="section-description">Complete tasks to earn bonus rewards</p>
+        </div>
+        
+        <div class="tasks-container">
+          <div class="task-card">
+            <div class="task-header">
+              <i class="fas fa-play-circle task-icon"></i>
+              <div class="task-info">
+                <h3>Watch 100 Ads</h3>
+                <p>Complete daily ad watching goal</p>
+              </div>
+            </div>
+            
+            <div class="task-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" id="taskProgress"></div>
+              </div>
+              <span class="progress-text">
+                <span id="currentProgress">0</span> / 100
+              </span>
+            </div>
+            
+            <div class="task-reward">
+              <span class="reward-amount">0.1 TRX</span>
+              <span class="reward-status" id="taskStatus">In Progress</span>
+            </div>
+          </div>
+          
+          <div class="task-card">
+            <div class="task-header">
+              <i class="fas fa-users task-icon"></i>
+              <div class="task-info">
+                <h3>Refer 5 Friends</h3>
+                <p>Invite friends to the platform</p>
+              </div>
+            </div>
+            
+            <div class="task-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" id="referralProgress"></div>
+              </div>
+              <span class="progress-text">
+                <span id="currentReferrals">0</span> / 5
+              </span>
+            </div>
+            
+            <div class="task-reward">
+              <span class="reward-amount">0.05 TRX</span>
+              <span class="reward-status" id="referralTaskStatus">In Progress</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2024 TRX Earn Bux. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay" class="loading-overlay">
+    <div class="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i>
+      <p>Processing...</p>
+    </div>
+  </div>
+
+  <!-- Success Toast -->
+  <div id="successToast" class="toast success-toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMessage">Success!</span>
   </div>
 
   <script src="script.js"></script>
