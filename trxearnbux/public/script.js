@@ -298,6 +298,29 @@ function formatNumber(num) {
   return parseFloat(num).toFixed(3);
 }
 
+// Add scroll behavior for header
+let lastScrollTop = 0;
+let header = document.querySelector('.header');
+let scrollThreshold = 50; // Minimum scroll distance to trigger header hide/show
+
+window.addEventListener('scroll', function() {
+  let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  let scrollDifference = Math.abs(scrollTop - lastScrollTop);
+  
+  // Only trigger if scroll difference is significant
+  if (scrollDifference > scrollThreshold) {
+    if (scrollTop > lastScrollTop && scrollTop > 100) {
+      // Scrolling down - hide header
+      header.classList.add('header-hidden');
+    } else if (scrollTop < lastScrollTop) {
+      // Scrolling up - show header
+      header.classList.remove('header-hidden');
+    }
+    
+    lastScrollTop = scrollTop;
+  }
+});
+
 // Add smooth scrolling for better UX
 function smoothScrollTo(elementId) {
   const element = document.getElementById(elementId);
