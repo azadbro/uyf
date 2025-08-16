@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TRX Earn Bux</title>
+  <meta charset="UTF-8">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <h1>🚀 TRX Earn Bux</h1>
+    <p id="welcome"></p>
+
+    <nav>
+      <button onclick="showSection('earn')">Earn</button>
+      <button onclick="showSection('refer')">Refer</button>
+      <button onclick="showSection('wallet')">Wallet</button>
+      <button onclick="showSection('tasks')">Tasks</button>
+    </nav>
+
+    <section id="earn" class="page">
+      <h2>Earn TRX</h2>
+      <button id="watchAd">🎥 Watch Ad (0.005 TRX)</button>
+      <p id="cooldown"></p>
+    </section>
+
+    <section id="refer" class="page" style="display:none;">
+      <h2>Refer & Earn</h2>
+      <p>Your link: <span id="refLink"></span></p>
+    </section>
+
+    <section id="wallet" class="page" style="display:none;">
+      <h2>Wallet</h2>
+      <p>Balance: <span id="balance">0</span> TRX</p>
+      <input id="binanceUid" placeholder="Binance UID">
+      <input id="amount" placeholder="Amount TRX">
+      <button id="withdrawBtn">💸 Withdraw</button>
+    </section>
+
+    <section id="tasks" class="page" style="display:none;">
+      <h2>Tasks</h2>
+      <p>🎯 Complete 100 ads to earn +0.1 TRX</p>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
